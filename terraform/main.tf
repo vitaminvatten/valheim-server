@@ -48,12 +48,8 @@ resource "google_compute_firewall" "valheim-fw" {
   network = var.VPC
 
   allow {
-    protocol = "icmp"
-  }
-
-  allow {
-    protocol = "tcp"
-    ports    = ["2456", "2457", "2458"]
+    protocol = "udp"
+    ports    = ["2456", "2457"]
   }
 
   target_tags = ["valheim-fw"]
