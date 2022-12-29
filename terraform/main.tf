@@ -5,6 +5,10 @@ resource "google_service_account" "Valheim_svc" {
   project      = var.project
 }
 
+resource "google_compute_address" "valheim-server-ip" {
+  name         = "valheim-server-ip"
+  address_type = "EXTERNAL"
+}
 
 #Server
 resource "google_compute_instance" "valheim-server" {
@@ -25,7 +29,9 @@ resource "google_compute_instance" "valheim-server" {
 
   network_interface {
     network = var.VPC
-    access_config {}
+    access_config {
+      nat_ip = google_compute_address.valheim-server-ip.address
+    }
   }
 
   service_account {
